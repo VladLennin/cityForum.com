@@ -1,0 +1,46 @@
+<div th:fragment="nav-panel">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+
+            <a  class="navbar-brand" href="/">Форум.UA</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li th:if="${user!=null}" class="nav-item">
+                        <a class="nav-link" href="/profile" th:text="${user.getLogin()}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/forum/all">Форуми</a>
+                    </li>
+
+                    <li class="nav-item dropdown" th:if="${user!=null} AND ${user.isAdmin()} ">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Інструменти адміна
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/create-forum">Створити новий форум</a></li>
+                            <li><a class="dropdown-item" href="/admin-page">Переглянути користувачів</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <button th:if="${user==null}" class="btn btn-outline-secondary me-1 ms-3" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">Sign in
+                        </button>
+                    </li>
+                </ul>
+                <form th:action="@{/logout}" class="d-flex ms-3" method="post">
+                    <div class="logout  me-1 my-2">
+                        <button class="btn logout  " th:if="${user!=null}" title="Log out" type="submit"><img
+                                src="https://cdn-icons-png.flaticon.com/512/182/182448.png"
+                                style="width:20px;height:20px;"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>

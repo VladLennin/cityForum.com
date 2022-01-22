@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Усі форуми</title>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <title>Main</title>
+</head>
+<body style="background: url(https://img5.goodfon.ru/wallpaper/nbig/2/f2/beeple-by-beeple-unlimited-fog-city-gorod-chelovek-ulitsa-ma.jpg) no-repeat center;
+    background-size: cover;">
+<header th:insert="blocks/nav-panel.html :: nav-panel"></header>
+<form method="post" class="d-flex ms-5 mt-3" th:action="@{'/forum/all/search'}">
+    <div class="d-flex">
+        <input placeholder="Введіть назву міста" type="text" name="searchData" class="form-control ms-4 me-4">
+        <button class="btn btn-primary me-2" type="submit">Search</button>
+    </div>
+</form>
+<main class="border mb-5  ms-5 me-5 mt-2" style="background: rgba(58,69,79,0.8);border-radius: 35px;min-height: 35rem">
+
+    <div class=" d-flex">
+        <div class="row  row-cols-3 g-4">
+            <div th:each="forum:${forums}">
+
+                <a th:href="@{'/forum/'+${forum.getId()}}">
+                    <div class="card  m-3 " style="min-width: 400px;">
+                        <div class="card-header">
+                            <label class="title" th:text="${forum.getCity()}"> </label>
+                        </div>
+                        <div class="card-body">
+                            <div th:switch="${forum.getImage()}">
+
+
+                                <svg th:case="'Default'" style="width: 150px;height: 150px;margin:10px;"
+                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-card-image" viewBox="0 0 16 16">
+                                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+                                </svg>
+
+                                <image th:case="*"
+                                       style="text-align: center;width: 150px;height: 150px;border-radius: 10px;border-style: solid;border-color: var(--bs-gray);margin: 10px;box-shadow: 5px 5px 10px var(--bs-gray-700);"
+                                       th:src="*{'data:image/jpeg;base64,'+forum.getImage}"></image>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <label class="form-label"
+                                           th:text="'Кількість тем для обговорення: ' + ${forum.getCountDiscussions()}"></label>
+                                </li>
+                                <li class="list-group-item">
+                                    <label class="form-label"
+                                           th:text="'Дата створення: ' + ${forum.getDateCreate()}"></label>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+</body>
+</html>
